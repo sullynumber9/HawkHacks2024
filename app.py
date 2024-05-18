@@ -45,6 +45,7 @@ def login_required(test):
 
 @app.route('/')
 def home():
+    # TODO: if login or not
     return render_template('pages/placeholder.home.html', output=str(datetime.datetime.now()))
 
 
