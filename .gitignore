@@ -4,4 +4,5 @@ env
 venv
 .venv
 config.json
+credentials.json
 __pycache__
