@@ -5,7 +5,7 @@ from flask import Flask, render_template, request # from flask.ext.sqlalchemy im
 from logging import Formatter, FileHandler
 from forms import *
 import os
-
+# hello world
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -38,7 +38,7 @@ def login_required(test):
 #----------------------------------------------------------------------------#
 
 
-@app.route('/') 
+@app.route('/')
 def home():
     return render_template('pages/placeholder.home.html')
 
