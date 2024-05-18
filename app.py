@@ -66,8 +66,6 @@ def forgot():
     return render_template('forms/forgot.html', form=form)
 
 # Error handlers.
-
-
 @app.errorhandler(500)
 def internal_error(error):
     #db_session.rollback()
