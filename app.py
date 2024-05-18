@@ -1,10 +1,7 @@
 #----------------------------------------------------------------------------#
 # Imports
 #----------------------------------------------------------------------------#
-
-from flask import Flask, render_template, request
-# from flask.ext.sqlalchemy import SQLAlchemy
-import logging
+from flask import Flask, render_template, request # from flask.ext.sqlalchemy import SQLAlchemy import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
@@ -41,7 +38,7 @@ def login_required(test):
 #----------------------------------------------------------------------------#
 
 
-@app.route('/')
+@app.route('/') 
 def home():
     return render_template('pages/placeholder.home.html')
 
