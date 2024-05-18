@@ -1,0 +1,8 @@
+Needed to sign into google:
+
+OAuth: https://oauth.net/
+Testdriven documentation: https://testdriven.io/blog/flask-social-auth/
+Authorization Token: https://oauth.net/2/grant-types/authorization-code/
+
+
+

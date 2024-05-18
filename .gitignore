@@ -3,4 +3,5 @@
 env
 venv
 .venv
+config.json
 __pycache__
