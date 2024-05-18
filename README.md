@@ -1,16 +1,11 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-## Welcome
+## Boilerplate Source
+[Flask Boilerplate Code by Real Python](https://github.com/realpython/flask-boilerplate)
 
-Hello. Want to get started with Flask quickly? Good. You came to the right place. This Flask application framework is pre-configured with **Flask-SQLAlchemy**, **Flask-WTF**, **Fabric**, **Coverage**, and the **Bootstrap** frontend (among others). This will get your Flask app up and running on Heroku or PythonAnywhere quickly. Use this starter, boilerplate for all you new Flask projects. Cheers!
+[RealPython](http://www.realpython.com)
 
-<hr>
-
-![real-python-logo](https://raw.githubusercontent.com/realpython/about/master/rp_small.png)
-
-**Designed for the [Real Python](http://www.realpython.com) course.**
-
-<hr>
+# Welcome
 
 Preview the skeleton app here - [http://www.flaskboilerplate.com/](http://www.flaskboilerplate.com/)
 
@@ -79,38 +74,25 @@ Project Structure
           └── placeholder.home.html
   ```
 
-### Screenshots
-
-![Pages](https://github.com/realpython/flask-boilerplate/blob/master/screenshots/pages.png)
-
-![Forms](https://github.com/realpython/flask-boilerplate/blob/master/screenshots/forms.png)
-
-
 ### Quick Start
 
-1. Clone the repo
+1. Initialize and activate a virtualenv:
   ```
-  $ git clone https://github.com/realpython/flask-boilerplate.git
-  $ cd flask-boilerplate
-  ```
-
-2. Initialize and activate a virtualenv:
-  ```
-  $ virtualenv --no-site-packages env
-  $ source env/bin/activate
+  $ python -m venv .venv
+  $ .venv/Scripts/activate
   ```
 
-3. Install the dependencies:
+2. Install the dependencies:
   ```
   $ pip install -r requirements.txt
   ```
 
-5. Run the development server:
+3. Run the development server:
   ```
-  $ python app.py
+  $ flask run
   ```
 
-6. Navigate to [http://localhost:5000](http://localhost:5000)
+4. Navigate to [http://localhost:5000](http://localhost:5000)
 
 
 Deploying to Heroku
