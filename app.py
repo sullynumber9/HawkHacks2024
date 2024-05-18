@@ -5,6 +5,8 @@ from flask import Flask, render_template, request # from flask.ext.sqlalchemy im
 from logging import Formatter, FileHandler
 from forms import *
 import os
+
+import datetime
 # hello world
 #----------------------------------------------------------------------------#
 # App Config.
@@ -40,7 +42,7 @@ def login_required(test):
 
 @app.route('/')
 def home():
-    return render_template('pages/placeholder.home.html')
+    return render_template('pages/placeholder.home.html', output=str(datetime.datetime.now()))
 
 
 @app.route('/about')
@@ -92,7 +94,7 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
 # Or specify port manually:
 '''
