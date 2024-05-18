@@ -4,8 +4,15 @@
 from flask import Flask, render_template, \
     request  # from flask.ext.sqlalchemy import SQLAlchemy import logging
 from logging import Formatter, FileHandler
+
 from forms import *
 import os
+from flask_sqlalchemy import SQLAlchemy
+
+from flask import Flask, redirect, url_for
+from flask_dance.contrib.google import make_google_blueprint, google
+import json
+import webbrowser
 
 import datetime
 # hello world
@@ -13,9 +20,22 @@ import datetime
 # App Config.
 # ----------------------------------------------------------------------------#
 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
+
+with open("config.json") as f:
+    config_data = json.load(f)
+
 app = Flask(__name__)
 app.config.from_object('config')
-# db = SQLAlchemy(app)
+app.secret_key = "supersekrit"
+
+# set config data
+client_id = config_data["client_id"]
+client_secret = config_data["client_secret"]
+scope=["profile", "email"]
+blueprint = make_google_blueprint(client_id, client_secret)
+app.register_blueprint(blueprint, url_prefix="/login")
 
 # Automatically tear down SQLAlchemy.
 '''
@@ -46,7 +66,10 @@ def login_required(test):
 @app.route('/')
 def home():
     # TODO: if login or not
-    return render_template('pages/placeholder.home.html', output=str(datetime.datetime.now()))
+    if not google.authorized:
+        return render_template('pages/placeholder.home.html', output=str(datetime.datetime.now()))
+    if google.authorized:
+        return render_template('pages/placeholder.home.html', output="You are signed in")
 
 
 @app.route('/about')
@@ -56,8 +79,11 @@ def about():
 
 @app.route('/login')
 def login():
-    form = LoginForm(request.form)
-    return render_template('forms/login.html', form=form)
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    resp = google.get("/login/google/authorized")
+    assert resp.ok, resp.text
+    return "You are {email} on Google".format(email=resp.json()["email"])
 
 
 @app.route('/register')
@@ -101,7 +127,8 @@ if not app.debug:
 
 # Default port:
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, use_debugger=False, use_reloader=False)
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
 
 # Or specify port manually:
 '''
