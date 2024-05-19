@@ -23,8 +23,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
-
+SCOPES = ["https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/userinfo.profile"]
 
 def FORMAT(start: str, end: str, description: str) -> dict:
     start_date, end_date = start[:10], end[:10]
@@ -106,7 +105,28 @@ def main():
         for event in events:
             start = event["start"].get("dateTime", event["start"].get("date"))
             end = event["end"].get("dateTime", event["end"].get("date"))
-            return FORMAT(start, end, event["summary"])
+
+            # people api call
+            
+        try:
+            # Build the People API service
+            people_service = build("people", "v1", credentials=creds)
+
+            # Call the People API to get the user's profile information
+            profile = people_service.people().get(resourceName="people/me", personFields="names").execute()
+            
+            # Extract the user's name from the profile response
+            names = profile.get('names', [])
+            if names:
+                user_name = names[0].get('displayName')
+                print(f"User's name: {user_name}")
+            else:
+                print("No name found in profile.")
+
+        except HttpError as error:
+                print(f"An error occurred: {error}")
+
+                return FORMAT(start, end, event["summary"])
 
     except HttpError as error:
         print(f"An error occurred: {error}")
