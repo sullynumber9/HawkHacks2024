@@ -65,7 +65,7 @@ def login_required(test):
 # ----------------------------------------------------------------------------#
 
 
-data = {"output": "You are signed in!", "login": False}
+data = {"output": "You are signed in!", "login": False, "first_time_login": False}
 
 @app.route('/')
 def home():
@@ -75,7 +75,9 @@ def home():
         
     if google.authorized:
         data["login"] = True
-        data["output"] = quickstart.main()
+        if data["first_time_login"]:
+            data["output"] = quickstart.main()
+            data["first_time_login"] = False
 
         return render_template('pages/placeholder.home.html', data=data)
 
@@ -88,6 +90,7 @@ def about():
 @app.route('/login')
 def login():
     if not google.authorized:
+        data["first_time_login"] = True
         return redirect(url_for("google.login"))
     resp = google.get("/login/google/authorized")
     assert resp.ok, resp.text
