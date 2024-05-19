@@ -13,6 +13,8 @@
 # limitations under the License.
 
 # [START calendar_quickstart]
+from Patrick import *
+from database import lst_of_users
 import datetime
 import os.path
 
@@ -23,7 +25,9 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/calendar.readonly", "https://www.googleapis.com/auth/userinfo.profile"]
+SCOPES = ["https://www.googleapis.com/auth/calendar.readonly",
+          "https://www.googleapis.com/auth/userinfo.profile"]
+
 
 def FORMAT(start: str, end: str, description: str) -> dict:
     start_date, end_date = start[:10], end[:10]
@@ -49,10 +53,10 @@ def FORMAT(start: str, end: str, description: str) -> dict:
     end_time = (f"0{int(end_floor)}:"[-3:] +
                 f"0{int(round(60 * (end_num - end_floor), 0))}"[-2:])
 
-    return {"start date": start_date, "start time": start_time,
+    return {"description": description, "start date": start_date,
+            "start time": start_time,
             "end date": end_date, "end time": end_time,
-            "Original time zone": original_time_zone,
-            "description": description}
+            "Original time zone": original_time_zone}
 
 
 def main():
@@ -108,7 +112,8 @@ def main():
             people_service = build("people", "v1", credentials=creds)
 
             # Call the People API to get the user's profile information
-            profile = people_service.people().get(resourceName="people/me", personFields="names").execute()
+            profile = people_service.people().get(resourceName="people/me",
+                                                  personFields="names").execute()
 
             # Extract the user's name from the profile response
             names = profile.get('names', [])
@@ -119,12 +124,15 @@ def main():
             print(f"An error occurred: {error}")
 
         lst_of_events = []
+        proper_events_lst = []
         for event in events:
             start = event["start"].get("dateTime", event["start"].get("date"))
             end = event["end"].get("dateTime", event["end"].get("date"))
-            description = event.get("description", "No description")
-            lst_of_events.append(FORMAT(start, end, description))
-        return (user_name, lst_of_events)
+            lst_of_events.append(FORMAT(start, end, event["summary"]))
+        for event in lst_of_events:
+            proper_events_lst.append(Event(event))
+        lst_of_users.append(User(user_name, proper_events_lst))
+
 
 
     except HttpError as error:
