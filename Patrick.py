@@ -106,3 +106,20 @@ dict = {"user_1_id": {'name': str, 'email': str, 'token': dict}
         "user_n_id": {'name': str, 'email': str, 'token': dict}
         }
 """
+class Event:
+    def __init__(self, dictionary: dict):
+    # sample input: {'start date': '2024-05-21', 'start time': '12:00', 'end date': '2024-05-21', 'end time': '13:00', 'Original time zone': '-04:00', 'description': 'Hello world'}
+        self.description = dictionary['description']
+        self.start_date = dictionary['start date']
+        self.start_time = dictionary['start time']
+        self.end_date = dictionary['end date']
+        self.end_time = dictionary['end time']
+        self.original_time_zone = dictionary['Original time zone']
+
+
+class User:
+    def __init__(self, name: str, events_lst: list[Event], email: str = ''):
+        self.name = name
+        self.email = email
+        self.events = events_lst
+
