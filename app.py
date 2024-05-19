@@ -17,6 +17,8 @@ import webbrowser
 import datetime
 
 import quickstart
+from Patrick import time_overlap
+from database import lst_of_users
 # hello world
 # ----------------------------------------------------------------------------#
 # App Config.
@@ -65,7 +67,7 @@ def login_required(test):
 # ----------------------------------------------------------------------------#
 
 
-data = {"output": "You are signed in!", "login": False, "first_time_login": False}
+data = {"output": "You are signed in!", "users": " ", "login": False, "first_time_login": False}
 
 @app.route('/')
 def home():
@@ -75,9 +77,13 @@ def home():
 
     if google.authorized:
         data["login"] = True
-        if data["first_time_login"]:
-            data["output"] = quickstart.main()
-            data["first_time_login"] = False
+        # if 0 and data["first_time_login"]:
+        data["users"] = quickstart.main()
+        data["first_time_login"] = False
+
+        # comparison
+        if len(lst_of_users) >= 2:
+            data["output"] = time_overlap(lst_of_users, "2024-05-20") # YYYY-MM-DD
 
         return render_template('pages/placeholder.home.html', data=data)
 
