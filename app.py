@@ -65,17 +65,17 @@ def login_required(test):
 # ----------------------------------------------------------------------------#
 
 
+data = {"output": "You are signed in!", "login": False}
+
 @app.route('/')
 def home():
     # TODO: if login or not
-    data = {"output": "You are signed in!", "login": False}
     if not google.authorized:
         return render_template('pages/placeholder.home.html', data=data)
         
     if google.authorized:
         data["login"] = True
-
-        quickstart.main()
+        data["output"] = quickstart.main()
 
         return render_template('pages/placeholder.home.html', data=data)
 
@@ -92,9 +92,6 @@ def login():
     resp = google.get("/login/google/authorized")
     assert resp.ok, resp.text
     return "You are {email} on Google".format(email=resp.json()["email"])
-
-    quickstart()
-
 
 @app.route('/register')
 def register():

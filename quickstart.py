@@ -139,7 +139,7 @@ def main():
 
         lst_of_users.append(User(user_name, proper_events_lst))
         print(lst_of_users[0].name, lst_of_users[0].events[0].description)
-
+        return lst_of_users
 
 
     except HttpError as error:
