@@ -101,32 +101,31 @@ def main():
             print("No upcoming events found.")
             return
 
-        # Prints the start and name of the next 10 events
-        for event in events:
-            start = event["start"].get("dateTime", event["start"].get("date"))
-            end = event["end"].get("dateTime", event["end"].get("date"))
+        user_name = "Unknown"
 
-            # people api call
-            
         try:
             # Build the People API service
             people_service = build("people", "v1", credentials=creds)
 
             # Call the People API to get the user's profile information
             profile = people_service.people().get(resourceName="people/me", personFields="names").execute()
-            
+
             # Extract the user's name from the profile response
             names = profile.get('names', [])
             if names:
                 user_name = names[0].get('displayName')
-                print(f"User's name: {user_name}")
-            else:
-                print("No name found in profile.")
 
         except HttpError as error:
-                print(f"An error occurred: {error}")
+            print(f"An error occurred: {error}")
 
-                return FORMAT(start, end, event["summary"])
+        lst_of_events = []
+        for event in events:
+            start = event["start"].get("dateTime", event["start"].get("date"))
+            end = event["end"].get("dateTime", event["end"].get("date"))
+            description = event.get("description", "No description")
+            lst_of_events.append(FORMAT(start, end, description))
+        return (user_name, lst_of_events)
+
 
     except HttpError as error:
         print(f"An error occurred: {error}")

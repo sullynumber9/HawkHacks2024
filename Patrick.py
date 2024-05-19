@@ -63,8 +63,8 @@ def _time_overlap_for_2_people(lst1: list[list[str]], lst2: list[list[str]],
          ] for i in overlap]  # and then returns it
 
 
-def time_overlap_for_n_people(lst: list[list[list[str]]], duration: int = 0) -> list[
-    list[str]]:
+def time_overlap_for_n_people(lst: list[list[list[str]]], duration: int = 0) \
+        -> list[list[str]]:
     """takes in a list of lists representing schedules of free times and outputs
     the compatible times between all the people where they can have a meeting
     with minimum duration <duration> which is in minutes. If duration == 0 or
@@ -98,8 +98,7 @@ def time_overlap_for_n_people(lst: list[list[list[str]]], duration: int = 0) -> 
     return overlap
 
 
-
-"""
+"""                     "data base" format
 dict = {"user_1_id": {'name': str, 'email': str, 'token': dict}
         "user_2_id": {'name': str, 'email': str, 'token': dict}
         ...
