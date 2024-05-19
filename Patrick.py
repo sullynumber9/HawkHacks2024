@@ -140,19 +140,44 @@ class User:
         """
         if not self.events:
             return [["07:00", "22:00"]]
-        events = []
+        events = []  # list of events that happen on the specific date
         for event in self.events:
             if event.start_date == specific_date:
                 events.append(event)
+
+        original_time_zone = events[0].original_time_zone
         free_times = []
         for i in range(len(events) - 1):
             free_times.append(
-                [events[i].end_time, events[i + 1].start_time])
-        if events[0].start_time != "07:00":
-            free_times.insert(0, ["07:00", events[0].start_time])
-        if events[-1].end_time != "22:00":
-            free_times.append([events[-1].end_time, "22:00"])
+                [self.convert(events[i].end_time, original_time_zone),
+                 self.convert(events[i + 1].start_time, original_time_zone)])
+        if self.convert(events[0].start_time, original_time_zone) != "07:00":
+            free_times.insert(0, ["07:00", self.convert(events[0].start_time,
+                                                        original_time_zone)])
+        if self.convert(events[-1].end_time, original_time_zone) != "22:00":
+            free_times.append(
+                [self.convert(events[-1].end_time, original_time_zone),
+                 "22:00"])
+
         return free_times
+
+    def convert(self, time: str, original_time_zone: str) -> str:
+        """converts the free times to the local time zone of the user"""
+        x = original_time_zone.split(':')
+        if int(x[0]) < 0:
+            y = int(x[0]) - int(x[1])
+        else:
+            y = int(x[0]) + int(x[1])
+
+        s = time.split(':')
+        time_decimal = int(s[0]) + int(s[1]) / 60
+        start_num = time_decimal + y
+        start_floor = start_num // 1
+        start_time = (f"0{int(start_floor)}:"[-3:] +
+                      f"0{int(round(60 * (start_num - start_floor), 0))}"[
+                      -2:])
+
+        return start_time
 
 
 def time_overlap(lst: list[User], specific_date, duration: int = 0) -> list[
