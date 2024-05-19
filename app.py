@@ -75,7 +75,7 @@ def home():
     if google.authorized:
         data["login"] = True
 
-        data["output"] = quickstart.main()
+        quickstart.main()
 
         return render_template('pages/placeholder.home.html', data=data)
 
