@@ -8,6 +8,7 @@
 <p class="lead">Calendar Compare Calendar Compare is a website that allows YOU to easily find when you and other poeple are free at the same time!  Just sign in with google, join a group, and we'll do the rest!</p>
 <p class="lead">Just sign in with Google and give it a try!</p>
 
+<h3>{{ data["output"] }}</h3> <!--TODO: MAKE THIS WITH PFP AND NAME-->
 {% if data["login"] != True %}
   <div class="container text-center">
     <a href="{{ url_for('login')}}" class="btn btn-google btn-lg">
@@ -17,6 +18,28 @@
   </div> 
 {% else %}
   <h3>{{ data["output"] }}</h3> <!--TODO: MAKE THIS WITH PFP AND NAME-->
+
+  <!-- if data["users"][1] exists -->
+  {% if data["users"][1] %}
+    <h3>User 1<h3>
+    <p>{{ data["users"][0].name }}</p>
+    <p>{{ data["users"][0].events }}</p>
+    <!-- list out all the events start date and end date -->
+    <ul>
+      {% for event in data["users"][0].events %}
+        <li>{{ event.start_time }} - {{ event.end_time }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>User 2<h3>
+    <p>{{ data["users"][-1].name }}</p>
+    <p>{{ data["users"][-1].events }}</p>
+    <ul>
+      {% for event in data["users"][-1].events %}
+        <li>{{ event.start_time }} - {{ event.end_time }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
   <!-- embed the calendar onscreen -->
 
 {% endif %}

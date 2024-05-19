@@ -73,12 +73,14 @@ data = {"output": "You are signed in!", "users": " ", "login": False, "first_tim
 def home():
     # TODO: if login or not
     if not google.authorized:
+        data["output"] = "Please login to continue"
         return render_template('pages/placeholder.home.html', data=data)
 
     if google.authorized:
+        data["output"] = "authorized"
+        data["users"] = quickstart.main()
         data["login"] = True
         # if 0 and data["first_time_login"]:
-        data["users"] = quickstart.main()
         data["first_time_login"] = False
 
         # comparison
