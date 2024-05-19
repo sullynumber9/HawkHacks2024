@@ -131,7 +131,9 @@ def main():
             lst_of_events.append(FORMAT(start, end, event["summary"]))
         for event in lst_of_events:
             proper_events_lst.append(Event(event))
+
         lst_of_users.append(User(user_name, proper_events_lst))
+        print(lst_of_users)
 
 
 

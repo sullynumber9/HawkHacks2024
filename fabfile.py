@@ -1,4 +1,4 @@
-from fabric.api import local, settings, abort
+'''from fabric.api import local, settings, abort
 from fabric.contrib.console import confirm
 
 # prepare for deployment
@@ -56,3 +56,4 @@ def deploy():
 
 def rollback():
     local("heroku rollback")
+'''
