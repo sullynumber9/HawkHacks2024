@@ -1,15 +1,28 @@
 {% extends 'layouts/main.html' %}
-{% block title %}Home{% endblock %}
+{% block title %}Calendar Compare{% endblock %}
 {% block content %}
 
 <div class="page-header">
   <h1>Calendar Compare</h1>
-  <img src="https://i.imgur.com/dCLJJ1w.png">
 </div>
 <p class="lead">Calendar Compare Calendar Compare is a website that allows YOU to easily find when you and other poeple are free at the same time!  Just sign in with google, join a group, and we'll do the rest!</p>
 <p class="lead">Just sign in with Google and give it a try!</p>
 
-<p class="lead">{{ output }}</p>
-<img src="screenshots/login.jpg">
+{% if data["login"] != True %}
+  <div class="container text-center">
+    <a href="{{ url_for('login')}}" class="btn btn-google btn-lg">
+        <img src="https://www.svgrepo.com/show/380993/google-logo-search-new.svg" class="google-logo" alt="Google logo">
+        Sign in with Google
+    </a>
+  </div> 
+{% else %}
+  <h3>You are already logged in!</h3> <!--TODO: MAKE THIS WITH PFP AND NAME-->
+{% endif %}
+<!-- if data["login"] is true, make p that says logged in, else make p that says dont login -->
+<!-- {% if data["login"] %}
+  <p class="lead">You are logged in!</p>
+{% else %}
+  <p class="lead">You are not logged in!</p>
+{% endif %} -->
 
 {% endblock %}

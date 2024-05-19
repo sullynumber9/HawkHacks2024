@@ -3,6 +3,22 @@
 <meta charset="utf-8">
 <title>{% block title %}{% endblock %}</title>
 
+<style>
+    .btn-google {
+        background-color: #292929;
+        color: white;
+        /* make the button bigger with line height and width */
+        line-height: 40px;
+    }
+    .btn-google:hover {
+        background-color: #D3D3D3;
+    }
+    .btn-google .google-logo {
+        height: 20px;
+        margin-right: 10px;
+    }
+</style>
+
 <!-- meta -->
 <meta name="description" content="">
 <meta name="author" content="">
@@ -33,6 +49,10 @@
 <!--[if lt IE 9]><script src="/static/js/libs/respond-1.4.2.min.js"></script><![endif]-->
 <!-- /scripts -->
 
+<link rel="icon" type="image/jpg" href="screenshots/logo.jpg"> <!-- TODO: CHANGE THIS TO .SVG -->
+
+<title>Calendar Compare</title>
+
 </head>
 <body>
 
@@ -48,13 +68,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">Calendar Compareq</a>
+          <a class="navbar-brand" href="/">Calendar Compare</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li {% if request.endpoint == 'home' %} class="active" {% endif %}><a href="{{ url_for('home') }}">Home</a></li>
-            <li {% if request.endpoint == 'about' %} class="active" {% endif %}><a href="{{ url_for('about') }}">About</a></li>
-            <li class="dropdown">
+            <!-- <li {% if request.endpoint == 'about' %} class="active" {% endif %}><a href="{{ url_for('about') }}">About</a></li> -->
+            <!-- <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a>Action</a></li>
@@ -65,11 +85,15 @@
                 <li><a>Separated link</a></li>
                 <li><a>One more separated link</a></li>
               </ul>
-            </li>
+            </li> -->
           </ul>
           <ul class="nav navbar-nav pull-right">
-            <li><a href="{{ url_for('register') }}">Signup</a></li>
-            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <!-- <li><a href="{{ url_for('register') }}">Signup</a></li> -->
+            <!-- {% if data["login"] != True %}
+              <li><a href="{{ url_for('login') }}">Sign in with Google</a></li>
+            {% else %}
+              <h3>You are already logged in!</h3> <!--TODO: MAKE THIS WITH PFP AND NAME-->
+            <!-- {% endif %} --> 
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -66,10 +66,12 @@ def login_required(test):
 @app.route('/')
 def home():
     # TODO: if login or not
+    data = {"output": "You are signed in!", "login": False}
     if not google.authorized:
-        return render_template('pages/placeholder.home.html', output=str(datetime.datetime.now()))
+        return render_template('pages/placeholder.home.html', data=data)
     if google.authorized:
-        return render_template('pages/placeholder.home.html', output="You are signed in")
+        data["login"] = True
+        return render_template('pages/placeholder.home.html', data=data)
 
 
 @app.route('/about')
