@@ -161,3 +161,4 @@ def time_overlap(lst: list[User], specific_date, duration: int = 0) -> list[
     for user in lst:
         lst_of_free_times_for_each_user.append(user.get_free(specific_date))
     return time_overlap_for_n_people(lst_of_free_times_for_each_user, duration)
+# hello world
