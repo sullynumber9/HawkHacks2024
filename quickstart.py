@@ -128,7 +128,7 @@ def main():
         for event in events:
             start = event["start"].get("dateTime", event["start"].get("date"))
             end = event["end"].get("dateTime", event["end"].get("date"))
-            lst_of_events.append(FORMAT(start, end, event["summary"]))
+            lst_of_events.append(FORMAT(start, end, event["summary"] if not event["summary"] else "No description"))
         for event in lst_of_events:
             proper_events_lst.append(Event(event))
 
