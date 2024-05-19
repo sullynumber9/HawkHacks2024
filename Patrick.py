@@ -1,5 +1,5 @@
-def _time_overlap_for_2_people(lst1: list[list[str]], lst2: list[list[str]],
-                               duration: int = 0) -> list[list[str]]:
+def _time_overlap_for_2_people(lst1: 'list[list[str]]', lst2: 'list[list[str]]',
+                               duration: int = 0) -> 'list[list[str]]':
     """takes in two lists representing schedules of free times and outputs
     the compatible times between the two where they can have a meeting with
     minimum duration <duration> which is in minutes. If duration == 0 or not
@@ -63,8 +63,8 @@ def _time_overlap_for_2_people(lst1: list[list[str]], lst2: list[list[str]],
          ] for i in overlap]  # and then returns it
 
 
-def time_overlap_for_n_people(lst: list[list[list[str]]], duration: int = 0) \
-        -> list[list[str]]:
+def time_overlap_for_n_people(lst: 'list[list[list[str]]]', duration: int = 0) \
+        -> 'list[list[str]]':
     """takes in a list of lists representing schedules of free times and outputs
     the compatible times between all the people where they can have a meeting
     with minimum duration <duration> which is in minutes. If duration == 0 or
@@ -120,12 +120,12 @@ class Event:
 
 
 class User:
-    def __init__(self, name: str, events_lst: list[Event], email: str = ''):
+    def __init__(self, name: str, events_lst: 'list[Event]', email: str = ''):
         self.name = name
         self.email = email
         self.events = events_lst
 
-    def get_free(self, specific_date) -> list[list[str]]:
+    def get_free(self, specific_date) -> 'list[list[str]]':
         """this function returns the free times of the user on a specific date
         in the format of a list of lists where each list represents a time
         interval in the form of [start_time, end_time] in military time. If the
@@ -180,8 +180,7 @@ class User:
         return start_time
 
 
-def time_overlap(lst: list[User], specific_date, duration: int = 0) -> list[
-    list[str]]:
+def time_overlap(lst: 'list[User]', specific_date, duration: int = 0) -> 'list[list[str]]':
     """takes in a list of users and outputs the compatible times between all the
     people where they can have a meeting on a specific date with minimum duration
     <duration> which is in minutes. If duration == 0 or not specified then it
