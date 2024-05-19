@@ -140,16 +140,18 @@ class User:
         """
         if not self.events:
             return [["07:00", "22:00"]]
+        events = []
+        for event in self.events:
+            if event.start_date == specific_date:
+                events.append(event)
         free_times = []
-        for i in range(len(self.events) - 1):
-            if self.events[i].end_date != specific_date:
-                continue
+        for i in range(len(events) - 1):
             free_times.append(
-                [self.events[i].end_time, self.events[i + 1].start_time])
-        if self.events[0].start_time != "07:00":
-            free_times.insert(0, ["07:00", self.events[0].start_time])
-        if self.events[-1].end_time != "22:00":
-            free_times.append([self.events[-1].end_time, "22:00"])
+                [events[i].end_time, events[i + 1].start_time])
+        if events[0].start_time != "07:00":
+            free_times.insert(0, ["07:00", events[0].start_time])
+        if events[-1].end_time != "22:00":
+            free_times.append([events[-1].end_time, "22:00"])
         return free_times
 
 
