@@ -142,6 +142,8 @@ class User:
             return [["07:00", "22:00"]]
         free_times = []
         for i in range(len(self.events) - 1):
+            if self.events[i].end_date != specific_date:
+                continue
             free_times.append(
                 [self.events[i].end_time, self.events[i + 1].start_time])
         if self.events[0].start_time != "07:00":
@@ -156,7 +158,8 @@ def time_overlap(lst: list[User], specific_date, duration: int = 0) -> list[
     """takes in a list of users and outputs the compatible times between all the
     people where they can have a meeting on a specific date with minimum duration
     <duration> which is in minutes. If duration == 0 or not specified then it
-    outputs all the overlapping free times for the two."""
+    outputs all the overlapping free times for the two.
+    """
     lst_of_free_times_for_each_user = []
     for user in lst:
         lst_of_free_times_for_each_user.append(user.get_free(specific_date))
