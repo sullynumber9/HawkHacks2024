@@ -96,3 +96,14 @@ def time_overlap_for_n_people(lst: list[list[list[str]]], duration: int = 0) -> 
     for i in range(1, len(lst)):
         overlap = _time_overlap_for_2_people(overlap, lst[i], duration)
     return overlap
+
+
+
+"""
+dict = {"user_1_id": {'name': str, 'email': str, 'token': dict}
+        "user_2_id": {'name': str, 'email': str, 'token': dict}
+        ...
+        ...
+        "user_n_id": {'name': str, 'email': str, 'token': dict}
+        }
+"""

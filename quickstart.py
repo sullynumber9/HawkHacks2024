@@ -26,6 +26,36 @@ from googleapiclient.errors import HttpError
 SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"]
 
 
+def FORMAT(start: str, end: str, description: str) -> dict:
+    start_date, end_date = start[:10], end[:10]
+    original_time_zone = start[-6:]
+
+    x = original_time_zone.split(':')
+    if int(x[0]) < 0:
+        y = int(x[0]) - int(x[1])
+    else:
+        y = int(x[0]) + int(x[1])
+
+    s, e = start[11:15].split(':'), end[11:15].split(':')
+    start_decimal = int(s[0]) + int(s[1]) / 60
+    end_decimal = int(e[0]) + int(e[1]) / 60
+
+    start_num = start_decimal - y
+    start_floor = (start_decimal - y) // 1
+    start_time = (f"0{int(start_floor)}:"[-3:] +
+                  f"0{int(round(60 * (start_num - start_floor), 0))}"[-2:])
+
+    end_num = end_decimal - y
+    end_floor = (end_decimal - y) // 1
+    end_time = (f"0{int(end_floor)}:"[-3:] +
+                f"0{int(round(60 * (end_num - end_floor), 0))}"[-2:])
+
+    return {"start date": start_date, "start time": start_time,
+            "end date": end_date, "end time": end_time,
+            "Original time zone": original_time_zone,
+            "description": description}
+
+
 def main():
     """Shows basic usage of the Google Calendar API.
     Prints the start and name of the next 10 events on the user's calendar.
@@ -76,7 +106,7 @@ def main():
         for event in events:
             start = event["start"].get("dateTime", event["start"].get("date"))
             end = event["end"].get("dateTime", event["end"].get("date"))
-            return (start, end, event["summary"])
+            return FORMAT(start, end, event["summary"])
 
     except HttpError as error:
         print(f"An error occurred: {error}")
