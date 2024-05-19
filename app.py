@@ -72,7 +72,7 @@ def home():
     # TODO: if login or not
     if not google.authorized:
         return render_template('pages/placeholder.home.html', data=data)
-        
+
     if google.authorized:
         data["login"] = True
         if data["first_time_login"]:

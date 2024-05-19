@@ -106,9 +106,11 @@ dict = {"user_1_id": {'name': str, 'email': str, 'token': dict}
         "user_n_id": {'name': str, 'email': str, 'token': dict}
         }
 """
+
+
 class Event:
     def __init__(self, dictionary: dict):
-    # sample input: {'start date': '2024-05-21', 'start time': '12:00', 'end date': '2024-05-21', 'end time': '13:00', 'Original time zone': '-04:00', 'description': 'Hello world'}
+        # sample input: {'start date': '2024-05-21', 'start time': '12:00', 'end date': '2024-05-21', 'end time': '13:00', 'Original time zone': '-04:00', 'description': 'Hello world'}
         self.description = dictionary['description']
         self.start_date = dictionary['start date']
         self.start_time = dictionary['start time']
@@ -123,3 +125,39 @@ class User:
         self.email = email
         self.events = events_lst
 
+    def get_free(self, specific_date) -> list[list[str]]:
+        """this function returns the free times of the user on a specific date
+        in the format of a list of lists where each list represents a time
+        interval in the form of [start_time, end_time] in military time. If the
+        user has no events on that day then it returns the whole day as free.
+        It does this by checking the events of the user that happen on that day
+        and then finding the free times between them. However, there are
+        boundaries from 7am to 10pm, you return the free times between these
+        boundaries.
+        >>> user = User("Patrick", [Event({'start date': '2024-05-21', 'start time': '12:00', 'end date': '2024-05-21', 'end time': '13:00', 'Original time zone': '-04:00', 'description': 'Hello world'}), Event({'start date': '2024-05-21', 'start time': '15:00', 'end date': '2024-05-21', 'end time': '16:00', 'Original time zone': '-04:00', 'description': 'Hello world'})])
+        >>> user.get_free("2024-05-21")
+        [['07:00', '12:00'], ['13:00', '15:00'], ['16:00', '22:00']]
+        """
+        if not self.events:
+            return [["07:00", "22:00"]]
+        free_times = []
+        for i in range(len(self.events) - 1):
+            free_times.append(
+                [self.events[i].end_time, self.events[i + 1].start_time])
+        if self.events[0].start_time != "07:00":
+            free_times.insert(0, ["07:00", self.events[0].start_time])
+        if self.events[-1].end_time != "22:00":
+            free_times.append([self.events[-1].end_time, "22:00"])
+        return free_times
+
+
+def time_overlap(lst: list[User], specific_date, duration: int = 0) -> list[
+    list[str]]:
+    """takes in a list of users and outputs the compatible times between all the
+    people where they can have a meeting on a specific date with minimum duration
+    <duration> which is in minutes. If duration == 0 or not specified then it
+    outputs all the overlapping free times for the two."""
+    lst_of_free_times_for_each_user = []
+    for user in lst:
+        lst_of_free_times_for_each_user.append(user.get_free(specific_date))
+    return time_overlap_for_n_people(lst_of_free_times_for_each_user, duration)
