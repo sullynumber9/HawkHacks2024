@@ -44,12 +44,12 @@ def FORMAT(start: str, end: str, description: str) -> dict:
     end_decimal = int(e[0]) + int(e[1]) / 60
 
     start_num = start_decimal - y
-    start_floor = (start_decimal - y) // 1
+    start_floor = start_num // 1
     start_time = (f"0{int(start_floor)}:"[-3:] +
                   f"0{int(round(60 * (start_num - start_floor), 0))}"[-2:])
 
     end_num = end_decimal - y
-    end_floor = (end_decimal - y) // 1
+    end_floor = end_num // 1
     end_time = (f"0{int(end_floor)}:"[-3:] +
                 f"0{int(round(60 * (end_num - end_floor), 0))}"[-2:])
 
