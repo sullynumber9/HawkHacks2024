@@ -15,6 +15,8 @@ import json
 import webbrowser
 
 import datetime
+
+import quickstart
 # hello world
 # ----------------------------------------------------------------------------#
 # App Config.
@@ -69,8 +71,12 @@ def home():
     data = {"output": "You are signed in!", "login": False}
     if not google.authorized:
         return render_template('pages/placeholder.home.html', data=data)
+        
     if google.authorized:
         data["login"] = True
+
+        data["output"] = quickstart.main()
+
         return render_template('pages/placeholder.home.html', data=data)
 
 
@@ -86,6 +92,8 @@ def login():
     resp = google.get("/login/google/authorized")
     assert resp.ok, resp.text
     return "You are {email} on Google".format(email=resp.json()["email"])
+
+    quickstart()
 
 
 @app.route('/register')
