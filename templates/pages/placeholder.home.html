@@ -1,46 +1,61 @@
-{% extends 'layouts/main.html' %}
-{% block title %}Calendar Compare{% endblock %}
-{% block content %}
+{% extends 'layouts/main.html' %} {% block title %}Calendar Compare{% endblock
+%} {% block content %}
 
-<div class="page-header">
+<div class="page-header text-center">
   <h1>Calendar Compare</h1>
 </div>
-<p class="lead">Calendar Compare Calendar Compare is a website that allows YOU to easily find when you and other poeple are free at the same time!  Just sign in with google, join a group, and we'll do the rest!</p>
-<p class="lead">Just sign in with Google and give it a try!</p>
+<p class="lead text-center">
+  Calendar Compare Calendar Compare is a website that allows YOU to easily find
+  when you and other poeple are free at the same time! Just sign in with google,
+  join a group, and we'll do the rest!
+</p>
+<p class="lead text-center"><strong>Just sign in with Google and give it a try!</strong></p>
 
-<h3>{{ data["output"] }}</h3> <!--TODO: MAKE THIS WITH PFP AND NAME-->
+<!--TODO: MAKE THIS WITH PFP AND NAME-->
 {% if data["login"] != True %}
   <div class="container text-center">
     <a href="{{ url_for('login')}}" class="btn btn-google btn-lg">
-        <img src="https://www.svgrepo.com/show/380993/google-logo-search-new.svg" class="google-logo" alt="Google logo">
-        Sign in with Google
+      <img
+        src="https://www.svgrepo.com/show/380993/google-logo-search-new.svg"
+        class="google-logo"
+        alt="Google logo"
+      />
+      Sign in with Google
     </a>
-  </div> 
+  </div>
 {% else %}
-  <h3>{{ data["output"] }}</h3> <!--TODO: MAKE THIS WITH PFP AND NAME-->
-
-  <!-- if data["users"][1] exists -->
+  <h3 class="text-center">{{ data["output"] }}</h3>
+  <!-- if data["users"][1] exists, display image -->
   {% if data["users"][1] %}
+    <div class="container text-center">
+      <img src="static\img\cal.png" alt="">
+    </div>
+  {% endif %}
+
+  <!--TODO: MAKE THIS WITH PFP AND NAME-->
+
+<!-- if data["users"][1] exists -->
+<!-- {% if data["users"][1] %}
     <h3>User 1<h3>
     <p>{{ data["users"][0].name }}</p>
-    <p>{{ data["users"][0].events }}</p>
-    <!-- list out all the events start date and end date -->
-    <ul>
+    <p>{{ data["users"][0].events }}</p> -->
+<!-- list out all the events start date and end date -->
+<!-- <ul>
       {% for event in data["users"][0].events %}
         <li>{{ event.start_time }} - {{ event.end_time }}</li>
       {% endfor %}
-    </ul>
+    </ul> -->
 
-    <h3>User 2<h3>
+<!-- <h3>User 2<h3>
     <p>{{ data["users"][-1].name }}</p>
     <p>{{ data["users"][-1].events }}</p>
     <ul>
       {% for event in data["users"][-1].events %}
         <li>{{ event.start_time }} - {{ event.end_time }}</li>
       {% endfor %}
-    </ul>
-  {% endif %}
-  <!-- embed the calendar onscreen -->
+    </ul> -->
+<!-- {% endif %} -->
+<!-- embed the calendar onscreen -->
 
 {% endif %}
 <!-- if data["login"] is true, make p that says logged in, else make p that says dont login -->
