@@ -1,3 +1,5 @@
+# I love hackathons
+
 def _time_overlap_for_2_people(lst1: list[list[str]], lst2: list[list[str]],
                                duration: int = 0) -> list[list[str]]:
     """takes in two lists representing schedules of free times and outputs
@@ -191,4 +193,3 @@ def time_overlap(lst: list[User], specific_date, duration: int = 0) -> list[
     for user in lst:
         lst_of_free_times_for_each_user.append(user.get_free(specific_date))
     return time_overlap_for_n_people(lst_of_free_times_for_each_user, duration)
-# hello world
